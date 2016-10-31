@@ -39,7 +39,6 @@ func search(w http.ResponseWriter, r *http.Request) {
 }
 
 func getPollingInfo(addressParam string) PollingInfo {
-  // key := "AIzaSyBY7rSXEqTK5nfdr4LVlgOUmMhYbiMs004"
   resp, err := http.Get(fmt.Sprintf("https://www.googleapis.com/civicinfo/v2/voterinfo?address=%s&key=%s", addressParam, key))
   if err != nil {
     fmt.Println(err)

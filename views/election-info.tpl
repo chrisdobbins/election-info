@@ -15,6 +15,17 @@
       </div>
       <div id="contests">
         <h2>Contests</h2>
+        <ul>
+          {{range $contest := .Contests}}
+          <li>{{$contest.Office}}</li>
+          <ul>
+            {{range $candidate := $contest.Candidates}}
+            <li>{{$candidate.Name}} <br />
+            {{$candidate.Party}} <br /></li>
+            {{end}}
+          </ul>
+          {{end}}
+        </ul>
       </div>
     </body>
 </html>
