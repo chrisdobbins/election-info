@@ -10,7 +10,7 @@
       </style>
     </head>
     <body>
-      <h1>Find Your Nearest Polling Place</h1>
+      <h1>Find Your Election Info</h1>
       <div id="main-container">
         <form action="/search" method="post">
           <input type="text" name="address" placeholder="1313 Mockingbird Ln" />
