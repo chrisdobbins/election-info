@@ -31,6 +31,16 @@ type dropOffLocation struct {
   EndDate string `json:"endDate"`
 }
 
+type pollingLocation struct {
+  Address address `json:"address"`
+  Notes   string  `json:"notes"`
+  PollingHours string `json:"pollingHours"`
+  Name    string `json:"name"`
+  VoterServices string `json:"voterServices"`
+  StartDate string `json:"startDate"`
+  EndDate string `json:"endDate"`
+}
+
 type contest struct {
     ContestType string `json:"type"`
     Office string `json:"office"`
@@ -46,6 +56,7 @@ type candidate struct {
     CandidateUrl string `json:"candidateUrl"`
 }
 type address struct {
+  LocationName string `json:"locationName"`
   Line1 string `json:"line1"`
   City string `json:"city"`
   State string `json:"state"`
