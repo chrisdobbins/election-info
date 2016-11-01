@@ -4,6 +4,7 @@ package main
 type PollingInfo struct {
     Election election `json:"election"`
     EarlyVoteSites []earlyVoteSite `json:"earlyVoteSites"`
+    DropOffLocations []dropOffLocation `json:"dropOffLocations"`
     Contests []contest `json:"contests"`
     State []stateInfo`json:"state"`
 }
@@ -20,9 +21,22 @@ type earlyVoteSite struct {
     EndDate string `json:"endDate"`
 }
 
+type dropOffLocation struct {
+  Address address `json:"address"`
+  Notes   string  `json:"notes"`
+  PollingHours string `json:"pollingHours"`
+  Name    string `json:"name"`
+  VoterServices string `json:"voterServices"`
+  StartDate string `json:"startDate"`
+  EndDate string `json:"endDate"`
+}
+
 type contest struct {
     ContestType string `json:"type"`
     Office string `json:"office"`
+    ReferendumTitle string `json:"referendumTitle"`
+    ReferendumSubtitle string `json:"referendumSubtitle"`
+    ReferendumText string `json:"referendumText"`
     Candidates []candidate `json:"candidates"`
 }
 

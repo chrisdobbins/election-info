@@ -25,15 +25,18 @@ func main() {
 
 func search(w http.ResponseWriter, r *http.Request) {
     r.ParseForm()
-    addressQuery := escapeQuery(r.Form["address"][0], r.Form["city"][0],
-    r.Form["state"][0],
-   r.Form["postal-code"][0])
+    address := r.Form["address"][0]
+    fmt.Println(address)
+    city := r.Form["city"][0]
+    state := r.Form["state"][0]
+    postal := r.Form["postal-code"][0]
+    addressQuery := escapeQuery(address, city, state, postal)
     electionObj := getPollingInfo(addressQuery)
     tmpl, err := text.New("election-info").Parse(getPage("election-info"))
     if err != nil {
       fmt.Println(err)
     }
-    fmt.Println(electionObj.EarlyVoteSites[0].Address)
+    // fmt.Println(electionObj.EarlyVoteSites[0].Address)
     err = tmpl.Execute(w, &electionObj)
 
 }
