@@ -23,7 +23,7 @@
           <ul>
             {{range $candidate := $contest.Candidates}}
             <li>{{$candidate.Name}}
-            {{if $candidate.Party}}<br />{{$candidate.Party}}{{end}} <br /></li>
+            {{if $candidate.Party}}<br />{{$candidate.Party}} <br />{{end}}</li>
             {{end}}
           </ul>
           {{else if $contest.ReferendumTitle}}
