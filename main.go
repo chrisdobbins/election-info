@@ -32,10 +32,23 @@ func search(w http.ResponseWriter, r *http.Request) {
     postal := r.Form["postal-code"][0]
     addressQuery := escapeQuery(address, city, state, postal)
     electionObj := sortContests(getPollingInfo(addressQuery))
-    // fmt.Println(pollingInfo.GeneralContests)
-    // fmt.Println(pollingInfo.Referendums)
     electionObj.FormattedDate = formatDate(electionObj.Election.ElectionDay)
-    fmt.Println(formatDate(electionObj.Election.ElectionDay))
+    // day, err := strconv.Atoi(strings.Split(electionObj.Election.ElectionDay, "-")[1])
+    // if err != nil {
+    //   fmt.Println("error: ", err)
+    // }
+    dateSlice := strings.Split(electionObj.Election.ElectionDay, "-")
+    month, err := strconv.Atoi(dateSlice[1])
+    year, err := strconv.Atoi(dateSlice[0])
+    day, err := strconv.Atoi(dateSlice[2])
+
+    convMonth := new(time.Month)
+    fmt.Println(convMonth)
+    parsedElectionDay := time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
+    fmt.Println(parsedElectionDay)
+    // strings.Replace(electionObj.Election.ElectionDay, "-", " ", -1)
+
+    // fmt.Println(formatDate(electionObj.Election.ElectionDay))
     tmpl, err := text.New("election-info").Parse(getPage("election-info"))
     if err != nil {
       fmt.Println(err)
@@ -59,8 +72,17 @@ func formatDate(date string) string {
   return fmt.Sprintf("%s %s, %s", month, dateSlice[2], year)
 }
 
+func calcDaysUntilElection(electionDay time.Time) {
+  today := time.Now().Day()
+  electionDate := electionDay.Day()
+  fmt.Println(electionDate)
+  fmt.Println(today)
+  fmt.Println(electionDay)
+}
+
 type organizedPollingInfo struct {
     Election election
+    DaysUntilElection int
     FormattedDate string
     EarlyVoteSites []earlyVoteSite
     DropOffLocations []dropOffLocation
