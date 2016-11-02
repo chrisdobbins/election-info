@@ -31,14 +31,57 @@ func search(w http.ResponseWriter, r *http.Request) {
     state := r.Form["state"][0]
     postal := r.Form["postal-code"][0]
     addressQuery := escapeQuery(address, city, state, postal)
-    electionObj := getPollingInfo(addressQuery)
+    electionObj := sortContests(getPollingInfo(addressQuery))
+    // fmt.Println(pollingInfo.GeneralContests)
+    // fmt.Println(pollingInfo.Referendums)
+
     tmpl, err := text.New("election-info").Parse(getPage("election-info"))
     if err != nil {
       fmt.Println(err)
     }
     // fmt.Println(electionObj.EarlyVoteSites[0].Address)
     err = tmpl.Execute(w, &electionObj)
+}
 
+type organizedPollingInfo struct {
+    Election election
+    EarlyVoteSites []earlyVoteSite
+    DropOffLocations []dropOffLocation
+    PollingLocations []pollingLocation
+    State []stateInfo
+    GeneralContests []generalContest
+    Referendums []referendumContest
+}
+
+func sortContests (p PollingInfo) (organizedPollingInfo) {
+  generalContests := []generalContest{}
+  referendums := []referendumContest{}
+  for _, contest := range p.Contests {
+    if contest.ContestType == "General" {
+      general := generalContest{
+        Office: contest.Office,
+        Candidates: contest.Candidates,
+      }
+      generalContests = append(generalContests, general)
+    }
+      if contest.ContestType == "Referendum" {
+        referendum := referendumContest{
+          Title: contest.ReferendumTitle,
+          Subtitle: contest.ReferendumSubtitle,
+          Text: contest.ReferendumText,
+        }
+        referendums = append(referendums, referendum)
+    }
+  }
+  op := organizedPollingInfo{
+    Election: p.Election,
+    EarlyVoteSites: p.EarlyVoteSites,
+    DropOffLocations: p.DropOffLocations,
+    State: p.State,
+    GeneralContests: generalContests,
+    Referendums: referendums,
+  }
+  return op
 }
 
 func getPollingInfo(addressParam string) PollingInfo {

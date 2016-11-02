@@ -5,6 +5,7 @@ type PollingInfo struct {
     Election election `json:"election"`
     EarlyVoteSites []earlyVoteSite `json:"earlyVoteSites"`
     DropOffLocations []dropOffLocation `json:"dropOffLocations"`
+    PollingLocations []pollingLocation `json:"pollingLocations"`
     Contests []contest `json:"contests"`
     State []stateInfo`json:"state"`
 }
@@ -48,6 +49,17 @@ type contest struct {
     ReferendumSubtitle string `json:"referendumSubtitle"`
     ReferendumText string `json:"referendumText"`
     Candidates []candidate `json:"candidates"`
+}
+
+type generalContest struct {
+  Office string
+  Candidates []candidate
+}
+
+type referendumContest struct {
+  Title string
+  Subtitle string
+  Text string
 }
 
 type candidate struct {
