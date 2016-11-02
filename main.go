@@ -7,11 +7,11 @@ import (
   "log"
   "bytes"
   "strings"
-  // "os"
-  _ "html/template"
+  "time"
   text "text/template"
     "net/url"
     "encoding/json"
+    "strconv"
 )
 type FormVars struct {
   Address string
@@ -34,7 +34,8 @@ func search(w http.ResponseWriter, r *http.Request) {
     electionObj := sortContests(getPollingInfo(addressQuery))
     // fmt.Println(pollingInfo.GeneralContests)
     // fmt.Println(pollingInfo.Referendums)
-
+    electionObj.FormattedDate = formatDate(electionObj.Election.ElectionDay)
+    fmt.Println(formatDate(electionObj.Election.ElectionDay))
     tmpl, err := text.New("election-info").Parse(getPage("election-info"))
     if err != nil {
       fmt.Println(err)
@@ -43,8 +44,24 @@ func search(w http.ResponseWriter, r *http.Request) {
     err = tmpl.Execute(w, &electionObj)
 }
 
+func formatDate(date string) string {
+  dateSlice := strings.Split(date, "-")
+  var year, month string
+  var monthInt int
+  var err error
+  year = dateSlice[0]
+  monthInt, err = strconv.Atoi(dateSlice[1])
+  if err != nil {
+    fmt.Println(err)
+  }
+  month = time.Month(monthInt).String()
+
+  return fmt.Sprintf("%s %s, %s", month, dateSlice[2], year)
+}
+
 type organizedPollingInfo struct {
     Election election
+    FormattedDate string
     EarlyVoteSites []earlyVoteSite
     DropOffLocations []dropOffLocation
     PollingLocations []pollingLocation
