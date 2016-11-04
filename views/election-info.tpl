@@ -3,12 +3,16 @@
     <head>
 
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+      <script src="http://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
       <style>
-        /*li {
-          list-style-type: none;
-        }*/
-      </style>
+        body {
+          font-size: 150%;
+        }
+        .btn-large {
+          margin-bottom: 1em;
+        }
+        </style>
     </head>
     <body>
       <div class="container">
@@ -50,31 +54,49 @@
         <h2>Your Voting Site(s)</h2>
           {{if .EarlyVoteSites}}
           <h3>Early Voting Sites</h3>
-          <ul class="list-group">
-          {{range $site := .EarlyVoteSites}}
-          <li class="list-group-item">{{$site.Address.Line1}}<br />
-            {{$site.Address.City}}, {{$site.Address.State}} {{$site.Address.Zip}}<br />
-          Hours: {{$site.PollingHours}}</li>
+          <ul class="list-unstyled">
+          {{range $idx, $site := .EarlyVoteSites}}
+          <li><button type="button" data-target="#hoursModal{{$idx}}" role="button" class="btn btn-large" data-toggle="modal">{{$site.Address.Line1}}<br />
+            {{$site.Address.City}}, {{$site.Address.State}} {{$site.Address.Zip}}</button></li>
+          <div id="hoursModal{{$idx}}" class="modal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                  Hours: {{$site.PollingHours}}
+              </div>
+            </div>
+          </div>
           {{end}}
           </ul>
           {{end}}
           {{if .DropOffLocations}}
           <h3>Drop-Off Locations</h3>
-          <ul>
-          {{range $site := .DropOffLocations}}
-          <li>{{$site.Address.Line1}}<br />
-            {{$site.Address.City}}, {{$site.Address.State}} {{$site.Address.Zip}}<br />
-          Hours: {{$site.PollingHours}}</li>
+          <ul class="list-unstyled">
+          {{range $idx, $site := .DropOffLocations}}
+          <li><button type="button" data-target="#hoursModal{{$idx}}" role="button" class="btn btn-large" data-toggle="modal">{{$site.Address.Line1}}<br />
+            {{$site.Address.City}}, {{$site.Address.State}} {{$site.Address.Zip}}</button></li>
+          <div id="hoursModal{{$idx}}" class="modal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                  Hours: {{$site.PollingHours}}
+              </div>
+            </div>
+          </div>
           {{end}}
           </ul>
           {{end}}
           {{if .PollingLocations}}
           <h3>Polling Locations</h3>
           <ul>
-            {{range $site := .PollingLocations}}
-            <li>{{$site.Address.Line1}}<br />
-              {{$site.Address.City}}, {{$site.Address.State}} {{$site.Address.Zip}}<br />
-            Hours: {{$site.PollingHours}}</li>
+            {{range $idx, $site := .PollingLocations}}
+            <li><button type="button" data-target="#hoursModal{{$idx}}" role="button" class="btn btn-large" data-toggle="modal">{{$site.Address.Line1}}<br />
+              {{$site.Address.City}}, {{$site.Address.State}} {{$site.Address.Zip}}</button></li>
+            <div id="hoursModal{{$idx}}" class="modal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                    Hours: {{$site.PollingHours}}
+                </div>
+              </div>
+            </div>
             {{end}}
           </ul>
           {{end}}
