@@ -12,6 +12,9 @@
         .btn-large {
           margin-bottom: 1em;
         }
+        .modal {
+          padding: 5px;
+        }
         </style>
     </head>
     <body>
@@ -26,6 +29,7 @@
           <h3>{{$contest.Office}}</h3>
           <ul class="list-group">
             {{range $candidate := $contest.Candidates}}
+            {{if $candidate.CandidateUrl}}
             <li class="list-group-item"><a href="{{$candidate.CandidateUrl}}"><h4>{{$candidate.Name}}</h4>
               {{if $candidate.Party}}
                 {{$candidate.Party}} <br />
@@ -33,6 +37,15 @@
                 No party listed
               {{end}}
            </a></li>
+           {{else}}
+           <li class="list-group-item"><h4>{{$candidate.Name}}</h4>
+             {{if $candidate.Party}}
+               {{$candidate.Party}} <br />
+             {{else}}
+               No party listed
+             {{end}}
+         </li>
+           {{end}}
             {{end}}
           </ul>
           {{end}}
