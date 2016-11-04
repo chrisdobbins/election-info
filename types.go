@@ -20,6 +20,7 @@ type earlyVoteSite struct {
     PollingHours string `json:"pollingHours"`
     StartDate string `json:"startDate"`
     EndDate string `json:"endDate"`
+    Name string `json:"name"`
 }
 
 type dropOffLocation struct {

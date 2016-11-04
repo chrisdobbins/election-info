@@ -56,7 +56,9 @@
           <h3>Early Voting Sites</h3>
           <ul class="list-unstyled">
           {{range $idx, $site := .EarlyVoteSites}}
-          <li><button type="button" data-target="#hoursModal{{$idx}}" role="button" class="btn btn-large" data-toggle="modal">{{$site.Address.Line1}}<br />
+          <li><button type="button" data-target="#hoursModal{{$idx}}" role="button" class="btn btn-large" data-toggle="modal">
+            {{if $site.Name}} {{$site.Name}} <br /> {{end}}
+            {{$site.Address.Line1}}<br />
             {{$site.Address.City}}, {{$site.Address.State}} {{$site.Address.Zip}}</button></li>
           <div id="hoursModal{{$idx}}" class="modal">
             <div class="modal-dialog">
@@ -72,7 +74,9 @@
           <h3>Drop-Off Locations</h3>
           <ul class="list-unstyled">
           {{range $idx, $site := .DropOffLocations}}
-          <li><button type="button" data-target="#hoursModal{{$idx}}" role="button" class="btn btn-large" data-toggle="modal">{{$site.Address.Line1}}<br />
+          <li><button type="button" data-target="#hoursModal{{$idx}}" role="button" class="btn btn-large" data-toggle="modal">
+            {{if $site.Name}} {{$site.Name}} <br /> {{end}}
+            {{$site.Address.Line1}}<br />
             {{$site.Address.City}}, {{$site.Address.State}} {{$site.Address.Zip}}</button></li>
           <div id="hoursModal{{$idx}}" class="modal">
             <div class="modal-dialog">
@@ -88,7 +92,9 @@
           <h3>Polling Locations</h3>
           <ul>
             {{range $idx, $site := .PollingLocations}}
-            <li><button type="button" data-target="#hoursModal{{$idx}}" role="button" class="btn btn-large" data-toggle="modal">{{$site.Address.Line1}}<br />
+            <li><button type="button" data-target="#hoursModal{{$idx}}" role="button" class="btn btn-large" data-toggle="modal">
+              {{if $site.Name}} {{$site.Name}}  <br /> {{end}}
+              {{$site.Address.Line1}}<br />
               {{$site.Address.City}}, {{$site.Address.State}} {{$site.Address.Zip}}</button></li>
             <div id="hoursModal{{$idx}}" class="modal">
               <div class="modal-dialog">
